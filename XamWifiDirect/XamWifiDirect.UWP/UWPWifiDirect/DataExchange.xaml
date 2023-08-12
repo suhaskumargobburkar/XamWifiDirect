@@ -27,7 +27,11 @@
 
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Grid.Column="0" x:Name="btnBack" Content="Go back" Click="btnBack_Click"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="btnConnect" Content="Connect" Click="btnConnect_Click"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="20">
+                <Button  x:Name="btnConnect" Content="Connect" Click="btnConnect_Click"/>
+                <Button x:Name="btnUnPair" Content="Unpair" Click="btnUnPair_Click"/>
+            </StackPanel>
+          
             <TextBlock Grid.Row="1" Grid.Column="0">Sender Section</TextBlock>
             <Button Grid.Row="2" Grid.Column="0" x:Name="btnService" Content="Start" Click="btnService_Click"/>
             <TextBlock Grid.Row="3" Grid.Column="0" x:Name="lblSenderStatus">Status</TextBlock>

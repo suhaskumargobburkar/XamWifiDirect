@@ -535,5 +535,19 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                 WriteConsole($"Connect operation threw an exception: {ex.Message}");
             }
         }
+
+        private async void btnUnPair_Click(object sender, RoutedEventArgs e)
+        {
+            var discoveredDevice = (DiscoveredDevice)lvDiscoveredDevices.SelectedItem;
+
+            if (discoveredDevice == null)
+            {
+                WriteConsole("No device selected, please select one.");
+                return;
+            }
+
+            DeviceUnpairingResult result = await discoveredDevice.DeviceInfo.Pairing.UnpairAsync();
+            WriteConsole($"Unpair result: {result.Status}");
+        }
     }
 }
