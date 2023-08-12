@@ -11,6 +11,8 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
     public partial class MainPage : Page
     {
         public const string FEATURE_NAME = "Wi-Fi Direct";
+        static MainPage mainPage;
+        public static MainPage Current => mainPage??(mainPage =new MainPage());
 
         List<Scenario> scenarios = new List<Scenario>
         {
