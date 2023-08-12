@@ -9,9 +9,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Margin="200">
-        <StackPanel>
+        <StackPanel Spacing="10">
             <TextBlock>Receiver page</TextBlock>
             <Button x:Name="btnClose" Content="Go Back" Click="btnClose_Click"/>
+            <Button x:Name="btnStart" Content="Start Watcher" Click="btnStart_Click"/>
+            <Button x:Name="btnStop" Content="Stop Watcher" Click="btnStop_Click"/>
+            <TextBlock x:Name="RecevierTextBlock"/>
+            <TextBlock x:Name="StatusTextBlock"/>
         </StackPanel>
        
     </Grid>

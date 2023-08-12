@@ -42,5 +42,15 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                 rootFrame.GoBack();
             }
         }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
