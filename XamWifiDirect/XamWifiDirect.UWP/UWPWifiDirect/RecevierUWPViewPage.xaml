@@ -13,31 +13,36 @@
             <TextBlock>Receiver page</TextBlock>
             <Button x:Name="btnClose" Content="Go Back" Click="btnClose_Click"/>
             <Button x:Name="btnStart" Content="Start Watcher" Click="btnStart_Click"/>
-            <Button x:Name="btnStop" Content="Stop Watcher" Click="btnStop_Click"/>
+          
             <TextBlock x:Name="RecevierTextBlock"/>
             <TextBlock x:Name="StatusTextBlock"/>
-            <Grid ColumnSpacing="50">
+            <Grid ColumnSpacing="50" RowSpacing="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Button Grid.Column="0" Content="Connect or Pair" x:Name="btnConnect" Click="btnConnect_Click"/>
-                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Grid.Column="0" Grid.Row="0" Content="Connect or Pair" x:Name="btnConnect" Click="btnConnect_Click"/>
+                <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <ListView  x:Name="lvConnectedDevices" Height="400" Width="350" ItemsSource="{x:Bind ConnectedDevices}" DisplayMemberPath="DisplayName" 
                                SelectionMode="Single" Background="LightGray" />
                 </ScrollViewer>
                 
 
                 <!-- UI elements for the second column -->
-                <Button Grid.Column="1" Content="Unpair" x:Name="btnUnpair" Click="btnUnpair_Click"/>
-                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <Button Grid.Column="1" Grid.Row="0" Content="Unpair" x:Name="btnUnpair" Click="btnUnpair_Click"/>
+                <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <ListView  x:Name="lvDiscoveredDevices" Height="400" Width="350" ItemsSource="{x:Bind DiscoveredDevices}" DisplayMemberPath="DisplayName" 
                                SelectionMode="Single" Background="LightGray" />
                 </ScrollViewer>
             </Grid>
-            <Button x:Name="btnSendData" Click="btnSendData_Click"/>
-            <TextBlock x:Name="txtMessage"/>
+            <Button x:Name="btnSendData" Click="btnSendData_Click" Content="Send"/>
+            <TextBox x:Name="txtMessage" Width="200" PlaceholderText="Enter Data"/>
         </StackPanel>
        
     </Grid>

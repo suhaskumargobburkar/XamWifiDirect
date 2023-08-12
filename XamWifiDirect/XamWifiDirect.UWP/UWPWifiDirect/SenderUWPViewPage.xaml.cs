@@ -372,5 +372,15 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
         {
             StopAdvertisement();
         }
+
+        private async void btnSendData_Click(object sender, RoutedEventArgs e)
+        {
+            var connectedDevice = (ConnectedDevice)lvConnectedDevices.SelectedItem;
+            if (connectedDevice != null)
+            {
+                string message = string.IsNullOrEmpty(txtMessage.Text) ? "No Data entered.." : txtMessage.Text;
+                await connectedDevice.SocketRW.WriteMessageAsync(message + " - " + DateTime.Now.ToString("dd/MMM/yyyy hh:mm ss tt"));
+            }
+        }
     }
 }

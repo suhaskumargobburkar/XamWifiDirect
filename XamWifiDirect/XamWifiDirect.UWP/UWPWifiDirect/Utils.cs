@@ -9,6 +9,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
 using Windows.UI.Popups;
+using Xamarin.Forms;
 
 namespace XamWifiDirect.UWP.UWPWifiDirect
 {
@@ -47,6 +48,16 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                 // Set the command that will be invoked if the user cancels
                 messageDialog.CancelCommandIndex = 0;
 
+                // Show the Pin 
+                await messageDialog.ShowAsync();
+            });
+        }
+
+        public static async Task ShowAlertMessage(CoreDispatcher dispatcher, string message)
+        {
+            await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var messageDialog = new MessageDialog(message);
                 // Show the Pin 
                 await messageDialog.ShowAsync();
             });

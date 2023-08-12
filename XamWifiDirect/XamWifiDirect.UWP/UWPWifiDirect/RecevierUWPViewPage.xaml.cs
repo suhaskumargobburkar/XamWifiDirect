@@ -64,7 +64,8 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
             ConnectedDevices.Remove(connectedDevice);
 
             // Close socket and WiFiDirect object
-            connectedDevice.Dispose();
+            if (connectedDevice != null)
+                connectedDevice.Dispose();
         }
         void PrintConsole(string message, NotifyType notify)
         {
@@ -173,7 +174,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
 
         private void OnConnectionStatusChanged(WiFiDirectDevice sender, object arg)
         {
-           PrintConsole($"Connection status changed: {sender.ConnectionStatus}", NotifyType.StatusMessage);
+            PrintConsole($"Connection status changed: {sender.ConnectionStatus}", NotifyType.StatusMessage);
         }
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
@@ -213,9 +214,11 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
             DevicePairingResult result = await customPairing.PairAsync(devicePairingKinds, DevicePairingProtectionLevel.Default, connectionParams);
             if (result.Status != DevicePairingResultStatus.Paired)
             {
+                await Utils.ShowAlertMessage(Dispatcher, "PairAsync failed");
                 PrintConsole($"PairAsync failed, Status: {result.Status}", NotifyType.ErrorMessage);
                 return false;
             }
+            await Utils.ShowAlertMessage(Dispatcher, "PairAsync True");
             return true;
         }
 
@@ -229,6 +232,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
 
             if (discoveredDevice == null)
             {
+                await Utils.ShowAlertMessage(Dispatcher, "Device not selected");
                 PrintConsole("No device selected, please select one.", NotifyType.ErrorMessage);
                 return;
             }
@@ -239,6 +243,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
             {
                 if (!await RequestPairDeviceAsync(discoveredDevice.DeviceInfo.Pairing))
                 {
+                    await Utils.ShowAlertMessage(Dispatcher, "Connect return");
                     return;
                 }
             }
@@ -263,7 +268,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                 // Connect to Advertiser on L4 layer
                 StreamSocket clientSocket = new StreamSocket();
                 await clientSocket.ConnectAsync(remoteHostName, Globals.strServerPort);
-               PrintConsole("Connected with remote side on L4 layer", NotifyType.StatusMessage);
+                PrintConsole("Connected with remote side on L4 layer", NotifyType.StatusMessage);
 
                 SocketReaderWriter socketRW = new SocketReaderWriter(clientSocket, rootPage);
 
@@ -278,14 +283,16 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                 {
                     // Keep reading messages
                 }
-
+                await Utils.ShowAlertMessage(Dispatcher, "Added Device " + wfdDevice.DeviceId);
             }
             catch (TaskCanceledException)
             {
+                await Utils.ShowAlertMessage(Dispatcher, "");
                 PrintConsole("FromIdAsync was canceled by user", NotifyType.ErrorMessage);
             }
             catch (Exception ex)
             {
+                await Utils.ShowAlertMessage(Dispatcher, "Error Connection operation");
                 PrintConsole($"Connect operation threw an exception: {ex.Message}", NotifyType.ErrorMessage);
             }
         }
@@ -293,12 +300,12 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
         private async void btnSendData_Click(object sender, RoutedEventArgs e)
         {
             var connectedDevice = (ConnectedDevice)lvConnectedDevices.SelectedItem;
-            if(connectedDevice!=null)
+            if (connectedDevice != null)
             {
                 string message = string.IsNullOrEmpty(txtMessage.Text) ? "No Data entered.." : txtMessage.Text;
                 await connectedDevice.SocketRW.WriteMessageAsync(message + " - " + DateTime.Now.ToString("dd/MMM/yyyy hh:mm ss tt"));
             }
-           
+
         }
 
         private async void btnUnpair_Click(object sender, RoutedEventArgs e)

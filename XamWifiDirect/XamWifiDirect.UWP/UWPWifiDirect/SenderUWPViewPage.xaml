@@ -16,6 +16,13 @@
             <Button x:Name="btnStop" Content="Stop Advertisement" Click="btnStop_Click"/>
             <TextBlock x:Name="SenderTextBlock"/>
             <TextBlock x:Name="StatusTextBlock"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView x:Name="lvConnectedDevices" HorizontalAlignment="Left" Height="134" Width="314"
+                              ItemsSource="{x:Bind ConnectedDevices}" DisplayMemberPath="DisplayName"
+                              SelectionMode="Single" Background="DimGray"/>
+            </ScrollViewer>
+            <Button x:Name="btnSendData" Content="Send Data" Click="btnSendData_Click"/>
+            <TextBox x:Name="txtMessage" Width="200" PlaceholderText="Enter Data"/>
         </StackPanel>
     </Grid>
 </Page>
