@@ -110,7 +110,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
         private void btnWatcher_Click(object sender, RoutedEventArgs e)
         {
             consoleMessages = new ObservableCollection<ConsoleMessage>();
-            if (btnService.Content.ToString() == "Start")
+            if (btnWatcher.Content.ToString() == "Start")
             {
                 _publisher.Start();
 

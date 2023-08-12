@@ -28,11 +28,11 @@
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Grid.Column="0" x:Name="btnBack" Content="Go back" Click="btnBack_Click"/>
             <TextBlock Grid.Row="1" Grid.Column="0">Sender Section</TextBlock>
-            <Button Grid.Row="2" Grid.Column="0" x:Name="btnService" Content="Start Service" Click="btnService_Click"/>
+            <Button Grid.Row="2" Grid.Column="0" x:Name="btnService" Content="Start" Click="btnService_Click"/>
             <TextBlock Grid.Row="3" Grid.Column="0" x:Name="lblSenderStatus">Status</TextBlock>
 
-            <TextBlock Grid.Row="1" Grid.Column="1">Sender Section</TextBlock>
-            <Button Grid.Row="2" Grid.Column="1" x:Name="btnWatcher" Content="Start Watcher" Click="btnWatcher_Click"/>
+            <TextBlock Grid.Row="1" Grid.Column="1">Receiver Section</TextBlock>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="btnWatcher" Content="Start" Click="btnWatcher_Click"/>
             <TextBlock Grid.Row="3" Grid.Column="1" x:Name="lblWatcherStatus">Status</TextBlock>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="4">
