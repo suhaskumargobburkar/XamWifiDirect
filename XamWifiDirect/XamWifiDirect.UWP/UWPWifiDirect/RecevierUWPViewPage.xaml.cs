@@ -296,7 +296,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
             if(connectedDevice!=null)
             {
                 string message = string.IsNullOrEmpty(txtMessage.Text) ? "No Data entered.." : txtMessage.Text;
-                await connectedDevice.SocketRW.WriteMessageAsync(message + " - " + DateTime.Now.ToString("dd/MMM/yyyy hh:mm ss tt"); ;
+                await connectedDevice.SocketRW.WriteMessageAsync(message + " - " + DateTime.Now.ToString("dd/MMM/yyyy hh:mm ss tt"));
             }
            
         }

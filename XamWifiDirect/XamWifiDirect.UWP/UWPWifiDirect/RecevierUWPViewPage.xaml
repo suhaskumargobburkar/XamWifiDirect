@@ -16,7 +16,7 @@
             <Button x:Name="btnStop" Content="Stop Watcher" Click="btnStop_Click"/>
             <TextBlock x:Name="RecevierTextBlock"/>
             <TextBlock x:Name="StatusTextBlock"/>
-            <Grid>
+            <Grid ColumnSpacing="50">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
