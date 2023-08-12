@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -22,6 +23,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
 
         public async void NotifyUserFromBackground(string strMessage, NotifyType type)
         {
+            Console.WriteLine("Print - " + type + " : " + strMessage);
             //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             //{
             //    NotifyUser(strMessage, type);
