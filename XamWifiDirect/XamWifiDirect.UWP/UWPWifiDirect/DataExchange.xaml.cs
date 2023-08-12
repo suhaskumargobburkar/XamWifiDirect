@@ -11,7 +11,10 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.WiFiDirect;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking;
 using Windows.Networking.Sockets;
+using Windows.Security.Cryptography;
+using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -460,6 +463,76 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                     foreach (var dev in ConnectedDevices)
                         await dev.SocketRW.WriteMessageAsync(message + " - " + DateTime.Now.ToString("dd/MMM/yyyy hh:mm ss tt"));
                 }
+            }
+        }
+
+        private async void btnConnect_Click(object sender, RoutedEventArgs e)
+        {
+            var discoveredDevice = (DiscoveredDevice)lvDiscoveredDevices.SelectedItem;
+
+            if (discoveredDevice == null)
+            {
+                await Utils.ShowAlertMessage(Dispatcher, "Device not selected");
+                WriteConsole("No device selected, please select one.");
+                return;
+            }
+
+            WriteConsole($"Connecting to {discoveredDevice.DeviceInfo.Name}...");
+
+            if (!discoveredDevice.DeviceInfo.Pairing.IsPaired)
+            {
+                if (!await RequestPairDeviceAsync(discoveredDevice.DeviceInfo.Pairing))
+                {
+                    await Utils.ShowAlertMessage(Dispatcher, "Connect return");
+                    return;
+                }
+            }
+
+            try
+            {
+                // IMPORTANT: FromIdAsync needs to be called from the UI thread
+                var wfdDevice = await WiFiDirectDevice.FromIdAsync(discoveredDevice.DeviceInfo.Id);
+
+                // Register for the ConnectionStatusChanged event handler
+                wfdDevice.ConnectionStatusChanged += OnConnectionStatusChanged;
+
+                IReadOnlyList<EndpointPair> endpointPairs = wfdDevice.GetConnectionEndpointPairs();
+                HostName remoteHostName = endpointPairs[0].RemoteHostName;
+
+                WriteConsole($"Devices connected on L2 layer, connecting to IP Address: {remoteHostName} Port: {Globals.strServerPort}");
+
+                // Wait for server to start listening on a socket
+                await Task.Delay(2000);
+
+                // Connect to Advertiser on L4 layer
+                StreamSocket clientSocket = new StreamSocket();
+                await clientSocket.ConnectAsync(remoteHostName, Globals.strServerPort);
+                WriteConsole("Connected with remote side on L4 layer");
+
+                SocketReaderWriter socketRW = new SocketReaderWriter(clientSocket, rootPage);
+
+                string sessionId = Path.GetRandomFileName();
+                ConnectedDevice connectedDevice = new ConnectedDevice(sessionId, wfdDevice, socketRW);
+                ConnectedDevices.Add(connectedDevice);
+
+                // The first message sent over the socket is the name of the connection.
+                //await socketRW.WriteMessageAsync(sessionId);
+
+                while (await socketRW.ReadMessageAsync() != null)
+                {
+                    // Keep reading messages
+                }
+                await Utils.ShowAlertMessage(Dispatcher, "Added Device " + wfdDevice.DeviceId);
+            }
+            catch (TaskCanceledException)
+            {
+                await Utils.ShowAlertMessage(Dispatcher, "");
+                WriteConsole("FromIdAsync was canceled by user");
+            }
+            catch (Exception ex)
+            {
+                await Utils.ShowAlertMessage(Dispatcher, "Error Connection operation");
+                WriteConsole($"Connect operation threw an exception: {ex.Message}");
             }
         }
     }
