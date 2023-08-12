@@ -38,7 +38,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
         {
             if(rootFrame != null)
             {
-                rootFrame.Navigate(typeof(RecevierUWPViewPage));
+                rootFrame.Navigate(typeof(DataExchange),false);
             }
         }
 
@@ -46,7 +46,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
         {
             if (rootFrame != null)
             {
-                rootFrame.Navigate(typeof(SenderUWPViewPage));
+                rootFrame.Navigate(typeof(DataExchange),true);
             }
         }
     }

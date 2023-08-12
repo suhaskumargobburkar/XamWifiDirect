@@ -106,6 +106,13 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
         }
     }
 
+
+    public class ConsoleMessage
+    {
+        public string Message { get; set; }
+       // public string logDate { get; set; } = DateTime.Now.ToString("hh:mm ss tt"); 
+    }
+
     public class DiscoveredDevice : INotifyPropertyChanged
     {
         public DeviceInformation DeviceInfo { get; private set; }
