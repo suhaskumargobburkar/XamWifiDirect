@@ -524,7 +524,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                 }
                 await Utils.ShowAlertMessage(Dispatcher, "Added Device " + wfdDevice.DeviceId);
             }
-            catch (TaskCanceledException)
+            catch (TaskCanceledException ex1)
             {
                 await Utils.ShowAlertMessage(Dispatcher, "");
                 WriteConsole("FromIdAsync was canceled by user");
