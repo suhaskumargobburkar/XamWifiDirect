@@ -24,6 +24,7 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
         public async void NotifyUserFromBackground(string strMessage, NotifyType type)
         {
             Console.WriteLine("Print - " + type + " : " + strMessage);
+            await Current.DisplayAlert("Alert", strMessage, "ok");
             //await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             //{
             //    NotifyUser(strMessage, type);

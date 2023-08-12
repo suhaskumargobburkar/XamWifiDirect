@@ -62,38 +62,38 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
                 uint capacity = 10000000;
                 Windows.Storage.Streams.Buffer buffer = new Windows.Storage.Streams.Buffer(capacity);
 
-                /* UInt32 bytesRead = await _dataReader.LoadAsync(sizeof(UInt32));
-                 if (bytesRead > 0)
-                 {
-                     // Determine how long the string is.
-                     UInt32 messageLength = _dataReader.ReadUInt32();
-                     bytesRead = await _dataReader.LoadAsync(messageLength);
-                     if (bytesRead > 0)
-                     {
-                         // Decode the string.
-                         string message = _dataReader.ReadString(messageLength);
-                         _rootPage.NotifyUserFromBackground("Got message: " + message, NotifyType.StatusMessage);
-                         return message;
-                     }
-                 }*/
-
-                //Read image from stream
-                StorageFile file = await DownloadsFolder.CreateFileAsync("firsttest.jpg", CreationCollisionOption.GenerateUniqueName);
-
-                while (true)
+                UInt32 bytesRead = await _dataReader.LoadAsync(sizeof(UInt32));
+                if (bytesRead > 0)
                 {
-
-                    await _streamSocket.InputStream.ReadAsync(buffer, capacity, InputStreamOptions.None);
-
-                    if (buffer.Length > 0)
+                    // Determine how long the string is.
+                    UInt32 messageLength = _dataReader.ReadUInt32();
+                    bytesRead = await _dataReader.LoadAsync(messageLength);
+                    if (bytesRead > 0)
                     {
-                        await FileIO.WriteBufferAsync(file, buffer);
-                    }
-                    else
-                    {
-                        break;
+                        // Decode the string.
+                        string message = _dataReader.ReadString(messageLength);
+                        _rootPage.NotifyUserFromBackground("Got message: " + message, NotifyType.StatusMessage);
+                        return message;
                     }
                 }
+
+                //Read image from stream
+                //StorageFile file = await DownloadsFolder.CreateFileAsync("firsttest.jpg", CreationCollisionOption.GenerateUniqueName);
+
+                //while (true)
+                //{
+
+                //    await _streamSocket.InputStream.ReadAsync(buffer, capacity, InputStreamOptions.None);
+
+                //    if (buffer.Length > 0)
+                //    {
+                //        await FileIO.WriteBufferAsync(file, buffer);
+                //    }
+                //    else
+                //    {
+                //        break;
+                //    }
+                //}
 
                 return "done";
 

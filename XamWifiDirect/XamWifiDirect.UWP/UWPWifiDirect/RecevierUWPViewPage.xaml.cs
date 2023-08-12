@@ -212,12 +212,13 @@ namespace XamWifiDirect.UWP.UWPWifiDirect
             customPairing.PairingRequested += OnPairingRequested;
 
             DevicePairingResult result = await customPairing.PairAsync(devicePairingKinds, DevicePairingProtectionLevel.Default, connectionParams);
-            if (result.Status != DevicePairingResultStatus.Paired)
+            if (result.Status != DevicePairingResultStatus.AlreadyPaired && result.Status!=DevicePairingResultStatus.Paired)
             {
                 await Utils.ShowAlertMessage(Dispatcher, "PairAsync failed");
                 PrintConsole($"PairAsync failed, Status: {result.Status}", NotifyType.ErrorMessage);
                 return false;
             }
+            btnSendData_Click(null, null);
             await Utils.ShowAlertMessage(Dispatcher, "PairAsync True");
             return true;
         }
